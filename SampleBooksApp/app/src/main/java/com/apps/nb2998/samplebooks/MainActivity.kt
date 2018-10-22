@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private fun addBooksToList() {
         val okhttpClient = OkHttpClient()
 //        val request = Request.Builder().url("http://127.0.0.1:5000/api/v1/books/all").build()
-        val request = Request.Builder().url("http://192.168.1.2:5000/api/v1/books/all").build()
+        val request = Request.Builder().url("http://192.168.1.6:80/api/v1/books/all").build()
         okhttpClient.newCall(request).enqueue(object: Callback{
             override fun onFailure(call: Call, e: IOException) {
                 Log.d("TAG", e.localizedMessage)
@@ -40,8 +40,10 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 val gson = Gson()
                 val list: MutableList<Book> = gson.fromJson(response.body()?.string(), Array<Book>::class.java).toMutableList()
-                booksList = list
-                adapter.notifyDataSetChanged()
+                booksList.addAll(list)
+                this@MainActivity.runOnUiThread {
+                    adapter.notifyDataSetChanged()
+                }
                 Log.d("TAG", booksList.size.toString())
             }
 

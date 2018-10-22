@@ -56,5 +56,5 @@ def api_filter():
     results = curr.execute(query, to_filter).fetchall()
     return jsonify(results)
 
-app.run()
+app.run(host='0.0.0.0', port=80)
 
