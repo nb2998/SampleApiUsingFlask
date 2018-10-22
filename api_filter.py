@@ -1,7 +1,9 @@
 import flask
+import os
 from flask import request, jsonify
 import sqlite3
 
+os.environ['NO_PROXY'] = '127.0.0.1'
 app=flask.Flask(__name__)
 app.config["DEBUG"] = True
 
